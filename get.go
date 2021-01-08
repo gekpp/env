@@ -3,6 +3,7 @@ package env
 import (
 	"os"
 	"strconv"
+	"time"
 )
 
 // GetString func returns environment variable value as a string value,
@@ -50,6 +51,21 @@ func GetFloat(key string, fallback float64) float64 {
 		return fallback
 	}
 	res, err := strconv.ParseFloat(value, 64)
+	if err != nil {
+		return fallback
+	}
+	return res
+}
+
+// GetDuration func returns environment variable value as a parsed duration value,
+// If variable doesn't exist, is not set or unparsable, returns fallback value
+func GetDuration(key string, fallback time.Duration) time.Duration {
+	value, exists := os.LookupEnv(key)
+	if !exists {
+		return fallback
+	}
+
+	res, err := time.ParseDuration(value)
 	if err != nil {
 		return fallback
 	}
