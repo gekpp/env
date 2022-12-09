@@ -1,3 +1,3 @@
-module gitlab.maiv.biz/exprowhite/env
+module github.com/gekpp/env
 
 go 1.15
